@@ -70,10 +70,11 @@ require_once($_SERVER["DOCUMENT_ROOT"] . '/../Support/basicLib.php');
     $from = htmlspecialchars($_POST['email']); // this is the sender's Email address
     $first_name = htmlspecialchars($_POST['first_name']);
     $last_name = htmlspecialchars($_POST['last_name']);
+    $comment = htmlspecialchars($_POST['message']);
     $subject = "English Class Exception- " . htmlspecialchars($_POST['topic']);
     $subject2 = "Copy of your English Class Exception form submission";
     $messageFooter = "-- Please do not reply to this email. If you requested a reply or if we need more information, we will contact you at the email address you provided. --";
-    $message = "logged in as=> " . $login_name . " " . $first_name . " " . $last_name . " email=> " . $from . " wrote the following:" . "\n\n" . htmlspecialchars($_POST['message']);
+    $message = "logged in as=> " . $login_name . " " . $first_name . " " . $last_name . " email=> " . $from . " wrote the following:" . "\n\n" . $comment;
     $message2 = "Here is a copy of your message " . $first_name . ":\n\n" . htmlspecialchars($_POST['message']) . "\n\n" . $messageFooter;
 
 
@@ -83,7 +84,28 @@ require_once($_SERVER["DOCUMENT_ROOT"] . '/../Support/basicLib.php');
     mail($from,$subject2,$message2, "From:english.department@umich.edu"); // sends a copy of the message to the sender
     echo "<h4>Mail Sent.</h4> <p>Thank you " . $first_name . " for sending your class exception! We’ve sent you a copy of this message at the email address you provided.<br>
 Have a great day!</p>";
-    echo "<a class='btn btn-info' href='index.php'>Return to UofM English Department</a>";
+
+  // prepare and bind
+    $sqlInsert = <<<_SQL
+    INSERT INTO `quilleng_ClassException`.`responses`
+    (`login_name`,
+    `first_name`,
+    `last_name`,
+    `reason`,
+    `email`,
+    `message`)
+    VALUES
+    (?,?,?,?,?,?);
+_SQL;
+    $stmt = $db->prepare($sqlInsert);
+    $stmt->bind_param("ssssss", $login_name, $first_name, $last_name, $subject, $from, $comment);
+
+    // set parameters and execute
+    $stmt->execute();
+
+    $login_name = $first_name = $last_name = $subject = $from = $comment = null;
+
+    echo "<a class='btn btn-info' href='https://webapps.lsa.umich.edu/english/secure/userservices/profile.asp'>Return to UofM English Department</a>";
     // You can also use header('Location: thank_you.php'); to redirect to another page.
     unset($_POST['submit']);
     } else {
@@ -100,7 +122,7 @@ Have a great day!</p>";
 <label for="last_name">Last Name:</label><input required type="text" class="form-control" name="last_name" value="<?php echo $username[1] ?>">
 </div>
 <div class="form-group">
-<label for="email">Email:</label><input required type="email" class="form-control" name="email">
+<label for="email">Email:</label><input required type="email" class="form-control" name="email" value="<?php echo $login_name ?>@umich.edu">
 </div>
 <div class="form-group">
 <label for="topic">Reason I am unable to teach my course:</label>
