@@ -87,7 +87,7 @@ Have a great day!</p>";
 
   // prepare and bind
     $sqlInsert = <<<_SQL
-    INSERT INTO `quilleng_ClassException`.`responses`
+    INSERT INTO `responses`
     (`login_name`,
     `first_name`,
     `last_name`,
