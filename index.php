@@ -74,8 +74,8 @@ require_once($_SERVER["DOCUMENT_ROOT"] . '/../Support/basicLib.php');
     $subject = "English Class Exception- " . htmlspecialchars($_POST['topic']);
     $subject2 = "Copy of your English Class Exception form submission";
     $messageFooter = "-- Please do not reply to this email. If you requested a reply or if we need more information, we will contact you at the email address you provided. --";
-    $message = "logged in as=> " . $login_name . " " . $first_name . " " . $last_name . " email=> " . $from . " wrote the following:" . "\n\n" . $comment;
-    $message2 = "Here is a copy of your message " . $first_name . ":\n\n" . htmlspecialchars($_POST['message']) . "\n\n" . $messageFooter;
+    $message = "logged in as=> " . $login_name . " Full Name=> " . $first_name . " " . $last_name . " email=> " . $from . " Reason=> " . htmlspecialchars($_POST['topic']) .  " Message:" . "\n\n" . $comment;
+    $message2 = "Here is a copy of your Class Exception message " . $first_name . ":\n\n" . " Reason=> " . htmlspecialchars($_POST['topic']) .  " Message:" . "\n\n" . $comment;
 
 
     $headers = "From:" . $from;
