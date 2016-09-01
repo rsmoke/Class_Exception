@@ -85,6 +85,7 @@ require_once($_SERVER["DOCUMENT_ROOT"] . '/../Support/basicLib.php');
     echo "<h4>Mail Sent.</h4> <p>Thank you " . $first_name . " for sending your class exception! We’ve sent you a copy of this message at the email address you provided.<br>
 Have a great day!</p>";
 
+    try {
   // prepare and bind
     $sqlInsert = <<<_SQL
     INSERT INTO `responses`
@@ -98,7 +99,12 @@ Have a great day!</p>";
     (?,?,?,?,?,?);
 _SQL;
     $stmt = $db->prepare($sqlInsert);
-    $stmt->bind_param("ssssss", $login_name, $first_name, $last_name, $subject, $from, $comment);
+
+      $stmt->bind_param("ssssss", $login_name, $first_name, $last_name, $subject, $from, $comment);
+    }
+    catch (PDOException $e){
+      echo"Error: " . $e->getMessage();
+    }
 
     // set parameters and execute
     $stmt->execute();
