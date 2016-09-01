@@ -83,26 +83,28 @@ require_once($_SERVER["DOCUMENT_ROOT"] . '/../Support/basicLib.php');
     mail($from,$subject2,$message2, "From:english.department@umich.edu"); // sends a copy of the message to the sender
     echo "<h4>Mail Sent.</h4> <p>Thank you " . $first_name . " for sending your class exception! We’ve sent you a copy of this message at the email address you provided.<br>
 Have a great day!</p>";
-    echo "<a class='btn btn-info' href='index.php'>Return to Hopwood Contest Judging</a>";
+    echo "<a class='btn btn-info' href='index.php'>Return to UofM English Department</a>";
     // You can also use header('Location: thank_you.php'); to redirect to another page.
     unset($_POST['submit']);
     } else {
         ?>
 <h4 class='text-primary'>Please describe the reason for your exception in the message box below.</h4>
 <small>If you would like us to contact you please specify that in your message.</small>
+<h5>Your Uniqname: <?php echo $login_name ?></h5>
+<?php $username = ldapGleaner($login_name);?>
 <form role="form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
 <div class="form-group">
-<label for="first_name">First Name:</label><input type="text" class="form-control" name="first_name">
+<label for="first_name">First Name:</label><input required type="text" class="form-control" name="first_name" value="<?php echo $username[0] ?>">
 </div>
 <div class="form-group">
-<label for="last_name">Last Name:</label><input type="text" class="form-control" name="last_name">
+<label for="last_name">Last Name:</label><input required type="text" class="form-control" name="last_name" value="<?php echo $username[1] ?>">
 </div>
 <div class="form-group">
-<label for="email">Email:</label><input type="email" class="form-control" name="email">
+<label for="email">Email:</label><input required type="email" class="form-control" name="email">
 </div>
 <div class="form-group">
 <label for="topic">Reason I am unable to teach my course:</label>
-<select class="form-control" name="topic">
+<select required class="form-control" name="topic">
   <option value="">--- Select a reason ---</option>
   <option value="Illness-Injury">Illness/Injury</option>
   <option value="OutOfTown">Out of town</option>
