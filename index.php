@@ -85,7 +85,6 @@ require_once($_SERVER["DOCUMENT_ROOT"] . '/../Support/basicLib.php');
     echo "<h4>Mail Sent.</h4> <p>Thank you " . $first_name . " for sending your class exception! We’ve sent you a copy of this message at the email address you provided.<br>
 Have a great day!</p>";
 
-    try {
   // prepare and bind
     $sqlInsert = <<<_SQL
     INSERT INTO `responses`
@@ -98,16 +97,26 @@ Have a great day!</p>";
     VALUES
     (?,?,?,?,?,?);
 _SQL;
-    $stmt = $db->prepare($sqlInsert);
 
-      $stmt->bind_param("ssssss", $login_name, $first_name, $last_name, $subject, $from, $comment);
+    $stmt = $db->prepare($sqlInsert);
+    if( false ===$stmt ) {
+      db_fatal_error('prepare() failed: ', htmlspecialchars($db->error), $stmt, $login_user);
     }
-    catch (PDOException $e){
-      echo"Error: " . $e->getMessage();
+    $rc = $stmt->bind_param("ssssss", $login_name, $first_name, $last_name, $subject, $from, $comment);
+    if ( false===$rc ) {
+      // again execute() is useless if you can't bind the parameters. Bail out somehow.
+      db_fatal_error('bind_param() failed: ',htmlspecialchars($stmt->error), $stmt, $login_user);
     }
 
     // set parameters and execute
-    $stmt->execute();
+    $rc = $stmt->execute();
+      // execute() can fail for various reasons. And may it be as stupid as someone tripping over the network cable
+      // 2006 "server gone away" is always an option
+      if ( false===$rc ) {
+        db_fatal_error('execute() failed: ',htmlspecialchars($stmt->error), $stmt, $login_user);
+      }
+
+    $stmt->close();
 
     $login_name = $first_name = $last_name = $subject = $from = $comment = null;
 
