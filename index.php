@@ -70,12 +70,13 @@ require_once($_SERVER["DOCUMENT_ROOT"] . '/../Support/basicLib.php');
     $from = htmlspecialchars($_POST['email']); // this is the sender's Email address
     $first_name = htmlspecialchars($_POST['first_name']);
     $last_name = htmlspecialchars($_POST['last_name']);
+    $course_no = htmlspecialchars($_POST['course_no']);
     $comment = htmlspecialchars($_POST['message']);
     $subject = "English Class Exception- " . htmlspecialchars($_POST['topic']);
     $subject2 = "Copy of your English Class Exception form submission";
     $messageFooter = "-- Please do not reply to this email. If you requested a reply or if we need more information, we will contact you at the email address you provided. --";
-    $message = "logged in as=> " . $login_name . "\n\nFull Name=> " . $first_name . " " . $last_name . "\n\nemail=> " . $from . "\n\nReason=> " . htmlspecialchars($_POST['topic']) .  "\n\nMessage:" . "\n\n" . $comment;
-    $message2 = "Here is a copy of your Class Exception message " . $first_name . ":\n\n" . " Reason=> " . htmlspecialchars($_POST['topic']) . "\n\n Message:" . "\n\n" . $comment;
+    $message = "logged in as=> " . $login_name . "\n\nFull Name=> " . $first_name . " " . $last_name . "\n\nemail=> " . $from . "\n\nCourse Number=> " . $course_no . "\n\nReason=> " . htmlspecialchars($_POST['topic']) .  "\n\nMessage:" . "\n\n" . $comment;
+    $message2 = "Here is a copy of your Class Exception message " . $first_name . "\n\nCourse Number=> " . $course_no . ":\n\nReason=> " . htmlspecialchars($_POST['topic']) . "\n\n Message:" . "\n\n" . $comment;
 
 
     $headers = "From:" . $from;
@@ -93,19 +94,20 @@ Have a great day!</p>";
     `last_name`,
     `reason`,
     `email`,
-    `message`)
+    `message`,
+    `course_no`)
     VALUES
-    (?,?,?,?,?,?);
+    (?,?,?,?,?,?,?);
 _SQL;
 
     $stmt = $db->prepare($sqlInsert);
-    if( false ===$stmt ) {
-      db_fatal_error('prepare() failed: ', htmlspecialchars($db->error), $stmt, $login_user);
+    if( false === $stmt ) {
+      db_fatal_error('prepare() failed: ', htmlspecialchars($db->error), $stmt, $login_name);
     }
-    $rc = $stmt->bind_param("ssssss", $login_name, $first_name, $last_name, $subject, $from, $comment);
+    $rc = $stmt->bind_param("sssssss", $login_name, $first_name, $last_name, $subject, $from, $comment, $course_no);
     if ( false===$rc ) {
       // again execute() is useless if you can't bind the parameters. Bail out somehow.
-      db_fatal_error('bind_param() failed: ',htmlspecialchars($stmt->error), $stmt, $login_user);
+      db_fatal_error('bind_param() failed: ',htmlspecialchars($stmt->error), $stmt, $login_name);
     }
 
     // set parameters and execute
@@ -113,18 +115,19 @@ _SQL;
       // execute() can fail for various reasons. And may it be as stupid as someone tripping over the network cable
       // 2006 "server gone away" is always an option
       if ( false===$rc ) {
-        db_fatal_error('execute() failed: ',htmlspecialchars($stmt->error), $stmt, $login_user);
+        db_fatal_error('execute() failed: ',htmlspecialchars($stmt->error), $stmt, $login_name);
       }
 
     $stmt->close();
 
-    $login_name = $first_name = $last_name = $subject = $from = $comment = null;
+    $login_name = $first_name = $last_name = $subject = $from = $comment = $course_no = null;
 
     echo "<a class='btn btn-info' href='https://webapps.lsa.umich.edu/english/secure/userservices/profile.asp'>Return to UofM English Department</a>";
     // You can also use header('Location: thank_you.php'); to redirect to another page.
     unset($_POST['submit']);
     } else {
         ?>
+<h3>If you are unable to teach one of your classes please fill out and submit this form so the English Department staff can communicate you absence to your students.</h3>
 <h4 class='text-primary'>Please describe the reason for your exception in the message box below.</h4>
 <small>If you would like us to contact you please specify that in your message.</small>
 <h5>Your Uniqname: <?php echo $login_name ?></h5>
@@ -138,6 +141,9 @@ _SQL;
 </div>
 <div class="form-group">
 <label for="email">Email:</label><input required type="email" class="form-control" name="email" value="<?php echo $login_name ?>@umich.edu">
+</div>
+<div class="form-group">
+<label for="course_no">Course Number: </label>English<input required type="text" class="form-control" name="course_no">
 </div>
 <div class="form-group">
 <label for="topic">Reason I am unable to teach my course:</label>
