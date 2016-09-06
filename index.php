@@ -143,7 +143,7 @@ _SQL;
 <label for="email">Email:</label><input required type="email" class="form-control" name="email" value="<?php echo $login_name ?>@umich.edu">
 </div>
 <div class="form-group">
-<label for="course_no">Course Number: </label>English<input required type="text" class="form-control" name="course_no">
+<label for="course_no">Course Number: </label><input required type="text" class="form-control" name="course_no">
 </div>
 <div class="form-group">
 <label for="topic">Reason I am unable to teach my course:</label>
