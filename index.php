@@ -78,11 +78,12 @@ require_once($_SERVER["DOCUMENT_ROOT"] . '/../Support/basicLib.php');
                         $last_name = htmlspecialchars($_POST['last_name']);
                         $course_no = htmlspecialchars($_POST['course_no']);
                         $comment = htmlspecialchars($_POST['message']);
-                        $subject = "English Class Exception- " . htmlspecialchars($_POST['topic']);
+                        $reason = htmlspecialchars($_POST['topic']);
+                        $subject = "English Class Exception- " . $reason;
                         $subject2 = "Copy of your English Class Exception form submission";
                         $messageFooter = "-- Please do not reply to this email. If you requested a reply or if we need more information, we will contact you at the email address you provided. --";
-                        $message = "logged in as=> " . $login_name . "\n\nFull Name=> " . $first_name . " " . $last_name . "\n\nemail=> " . $from . "\n\nCourse Number=> " . $course_no . "\n\nReason=> " . htmlspecialchars($_POST['topic']) .  "\n\nMessage:" . "\n\n" . $comment;
-                        $message2 = "Here is a copy of your Class Exception message " . $first_name . "\n\nCourse Number=> " . $course_no . ":\n\nReason=> " . htmlspecialchars($_POST['topic']) . "\n\n Message:" . "\n\n" . $comment;
+                        $message = "logged in as=> " . $login_name . "\n\nFull Name=> " . $first_name . " " . $last_name . "\n\nemail=> " . $from . "\n\nCourse Number=> " . $course_no . "\n\nReason=> " . $reason .  "\n\nMessage:" . "\n\n" . $comment;
+                        $message2 = "Here is a copy of your Class Exception message " . $first_name . "\n\nCourse Number=> " . $course_no . ":\n\nReason=> " . $reason . "\n\n Message:" . "\n\n" . $comment;
 
 
                         $headers = "From:" . $from;
@@ -110,7 +111,7 @@ _SQL;
                         if( false === $stmt ) {
                             db_fatal_error('prepare() failed: ', htmlspecialchars($db->error), $stmt, $login_name);
                         }
-                        $rc = $stmt->bind_param("sssssss", $login_name, $first_name, $last_name, $subject, $from, $comment, $course_no);
+                        $rc = $stmt->bind_param("sssssss", $login_name, $first_name, $last_name, $reason, $from, $comment, $course_no);
                         if ( false===$rc ) {
                             // again execute() is useless if you can't bind the parameters. Bail out somehow.
                             db_fatal_error('bind_param() failed: ',htmlspecialchars($stmt->error), $stmt, $login_name);
@@ -126,7 +127,7 @@ _SQL;
 
                         $stmt->close();
 
-                        $login_name = $first_name = $last_name = $subject = $from = $comment = $course_no = null;
+                        $login_name = $first_name = $last_name = $reason = $from = $comment = $course_no = null;
 
                         echo "<a class='btn btn-info' href='https://webapps.lsa.umich.edu/english/secure/userservices/profile.asp'>Return to UofM English Department</a>";
                         // You can also use header('Location: thank_you.php'); to redirect to another page.
