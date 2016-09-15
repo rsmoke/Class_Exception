@@ -34,10 +34,10 @@ if (isset($_GET['search'])) {
         <meta name="description" content="<?php echo "$appTitle";?>">
         <meta name="keywords" content="LSA,<?php echo $deptLngName;?>,<?php echo "$appTitle";?>,University of Michigan">
         <meta name="author" content="LSA-MIS_rsmoke">
-        <link type="text/plain" rel="author" href="humans.txt" />
+        <link type="text/plain" rel="author" href="../humans.txt" />
 
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
-        <link rel="icon" href="favicon.ico">
+        <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+        <link rel="icon" href="../favicon.ico">
         <!-- Place favicon.ico in the root directory -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha256-ZT4HPpdCOt2lvDkXokHuhJfdOKSPFLzeAJik5U/Q+l4=" crossorigin="anonymous">
@@ -51,8 +51,8 @@ if (isset($_GET['search'])) {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" integrity="sha256-K3Njjl2oe0gjRteXwX01fQD5fkk9JFFBdUHy/h38ggY=" crossorigin="anonymous">
 
 <!--        <link rel="stylesheet" href="css/normalize.css">-->
-        <link rel="stylesheet" href="css/main.css">
-        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+        <link rel="stylesheet" href="../css/main.css">
+        <script src="../js/vendor/modernizr-2.8.3.min.js"></script>
 <!--        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>-->
     </head>
     <body>
@@ -69,7 +69,7 @@ if (isset($_GET['search'])) {
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
-                    </button> <a class="navbar-brand" href="index.php">
+                    </button> <a class="navbar-brand" href="../index.php">
                         <?php echo "$appTitle";?> - Dashboard</a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -149,22 +149,23 @@ if (isset($_GET['search'])) {
                     ?>
             </div>
         </div> <!-- END of container of all things -->
+
         <?php
-        include("footer.php");
+        include($_SERVER["DOCUMENT_ROOT"] . '/footer.php');
         ?>
 
 <!--        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>-->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
+        <script>window.jQuery || document.write('<script src="../js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-formhelpers/2.3.0/js/bootstrap-formhelpers.min.js" integrity="sha256-H7Mu9l17V/M6Q1gDKdv27je+tbS2QnKmoNcFypq/NIQ=" crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.2/velocity.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.2/velocity.ui.min.js"></script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
+        <script src="../js/plugins.js"></script>
+        <script src="../js/main.js"></script>
 
         <!-- Google Analytics: change UA-84157001-1 to be your site's ID. -->
-        <?php include_once("analyticstracking.php") ?>
+        <?php include_once($_SERVER["DOCUMENT_ROOT"] . '/analyticstracking.php') ?>
     </body>
 </html>
