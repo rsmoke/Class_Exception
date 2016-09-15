@@ -6,14 +6,15 @@ if (isset($_GET['search'])) {
     try {
         $sql = 'SELECT login_name,first_name,last_name,reason,message,course_no,created
                 FROM responses
-                WHERE last_name LIKE ?
-                ORDER BY last_name, created';
+                WHERE last_name LIKE ? AND course_no LIKE ?
+                ORDER BY created DESC, last_name';
         $stmt = $db->stmt_init();
         if (!$stmt->prepare($sql)) {
             $error = $stmt->error;
         } else {
-            $stmt->bind_param('s', $last_name);
-                $last_name = '%' . $_GET['last_name'] . '%';
+            $stmt->bind_param('ss', $last_name, $course_no);
+            $last_name = '%' . $_GET['last_name'] . '%';
+            $course_no = '%' . $_GET['course_no'] . '%';
             $stmt->execute();
             $stmt->bind_result($uniqname, $first_name, $last_name, $reason, $comment, $course_no, $date_entered);
         }
@@ -22,7 +23,6 @@ if (isset($_GET['search'])) {
     }
 }
 ?>
-
 
 <!doctype html>
 <html class="no-js" lang="">
@@ -95,20 +95,21 @@ if (isset($_GET['search'])) {
                     <?php if (isset($error)) {
                         echo "<p>$error</p>";
                     } ?>
-                    <form class="form-inline" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                    <form class="form-inline" method="get" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                         <div class="form-group">
                             <label for="last_name">Last name: </label>
                             <input type="text" name="last_name" id="last_name">
                         </div>
-<!--                        <div class="form-group">-->
-<!--                            <label for="course_no">Course #: </label>-->
-<!--                            <input type="text" name="course_no" id="course_no">-->
-<!--                        </div>-->
+                        <div class="form-group">
+                            <label for="course_no">Course #: </label>
+                            <input type="text" name="course_no" id="course_no">
+                        </div>
 
                         <div class="form-group">
-                            <input type="submit" name="search" value="Search"> <em>Leave blank to find all records</em>
+                            <input type="submit" name="search" value="Search">
                         </div>
                     </form>
+                    <em>NOTE: Leave search fields blank to find all records</em>
                 </div>
             </div>
             <div class="row clearfix">
@@ -136,7 +137,7 @@ if (isset($_GET['search'])) {
                                         <td><?php echo $course_no; ?></td>
                                         <td><?php echo $reason; ?></td>
                                         <td class="scrollable"><div><?php echo $comment; ?></div></td>
-                                        <td><?php echo date("m-d-Y g:ia", strtotime($date_entered)); ?></td>
+                                        <td><?php echo date("n-j-Y g:iA", strtotime($date_entered)); ?></td>
                                     </tr>
                                 <?php }  ?>
                             </table>
