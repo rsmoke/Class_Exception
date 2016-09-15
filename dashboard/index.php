@@ -151,7 +151,7 @@ if (isset($_GET['search'])) {
         </div> <!-- END of container of all things -->
 
         <?php
-        include($_SERVER["DOCUMENT_ROOT"] . '/footer.php');
+        include('../footer.php');
         ?>
 
 <!--        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>-->
@@ -166,6 +166,6 @@ if (isset($_GET['search'])) {
         <script src="../js/main.js"></script>
 
         <!-- Google Analytics: change UA-84157001-1 to be your site's ID. -->
-        <?php include_once($_SERVER["DOCUMENT_ROOT"] . '/analyticstracking.php') ?>
+        <?php include_once('../analyticstracking.php') ?>
     </body>
 </html>
