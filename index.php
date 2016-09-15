@@ -83,7 +83,7 @@ require_once($_SERVER["DOCUMENT_ROOT"] . '/../Support/basicLib.php');
                         $subject2 = "Copy of your English Class Exception form submission";
                         $messageFooter = "-- Please do not reply to this email. If you requested a reply or if we need more information, we will contact you at the email address you provided. --";
                         $message = "logged in as=> " . $login_name . "\n\nFull Name=> " . $first_name . " " . $last_name . "\n\nemail=> " . $from . "\n\nCourse Number=> " . $course_no . "\n\nReason=> " . $reason .  "\n\nMessage:" . "\n\n" . $comment;
-                        $message2 = "Here is a copy of your Class Exception message " . $first_name . "\n\nCourse Number=> " . $course_no . ":\n\nReason=> " . $reason . "\n\n Message:" . "\n\n" . $comment;
+                        $message2 = "Here is a copy of your Class Exception message " . $first_name . "\n\nCourse Number=> " . $course_no . "\n\nReason=> " . $reason . "\n\n Message:" . "\n\n" . $comment;
 
 
                         $headers = "From:" . $from;
