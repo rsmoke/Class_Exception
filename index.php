@@ -134,7 +134,7 @@ _SQL;
                         unset($_POST['submit']);
                     } else {
                         ?>
-                        <h3>If you are unable to teach one of your classes please fill out and submit this form so the English Department staff can post necessary signs in your absence.</h3>
+                        <h3>If you are unable to teach one of your classes please fill out and submit this form so the English Department staff can post necessary signage in your absence.</h3>
                         <h4>Please be sure to contact your student using <a href="https://umich.instructure.com/" target="_blank">Canvas</a> also. This form will notify the English Staff but not your students.</h4>
                         <h4 class='text-primary'>Please describe the reason for your exception in the message box below.</h4>
                         <small>If you would like us to contact you please specify that in your message.</small>
