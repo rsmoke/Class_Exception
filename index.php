@@ -134,7 +134,7 @@ _SQL;
                         unset($_POST['submit']);
                     } else {
                         ?>
-                        <h3>If you are unable to teach one of your classes please fill out and submit this form so the English Department staff can communicate you absence to your students.</h3>
+                        <h3>If you are unable to teach one of your classes please fill out and submit this form so the English Department staff can communicate your absence to your students.</h3>
                         <h4 class='text-primary'>Please describe the reason for your exception in the message box below.</h4>
                         <small>If you would like us to contact you please specify that in your message.</small>
                         <h5>Your Uniqname: <?php echo $login_name ?></h5>
